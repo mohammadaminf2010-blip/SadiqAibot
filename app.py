@@ -1,20 +1,14 @@
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram import Update
+from telegram.ext import ContextTypes
+import os
 
-# ======== جایگزین کن با توکن خودت ========
-TOKEN = "8478052154:AAF_lpW7or9m_QVpz2CdRgCL8qQv_yff6So"
+TOKEN = os.getenv("BOT_TOKEN")
 
-# تابع پاسخ به /start
-def start(update, context):
-    update.message.reply_text("سلام! ربات با موفقیت روشن شد ✅")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("ربات روشنه و با Python 3.11 کار می‌کنه 😊")
 
-# ساخت updater و dispatcher
-updater = Updater(TOKEN, use_context=True)
-dp = updater.dispatcher
+app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(CommandHandler("start", start))
 
-# اضافه کردن دستور /start
-dp.add_handler(CommandHandler("start", start))
-
-# اجرای ربات
-print("ربات روشن شد... ✅")
-updater.start_polling()
-updater.idle()
+app.run_polling()

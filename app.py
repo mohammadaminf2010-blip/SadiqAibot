@@ -1,14 +1,19 @@
-from telegram.ext import ApplicationBuilder, CommandHandler
-from telegram import Update
-from telegram.ext import ContextTypes
+from telegram.ext import Updater, CommandHandler
 import os
 
-TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = "8478052154:AAEFoZ2s5RXuX2BWLmP38OUV0CsggUQ6Qow"
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("ربات روشنه و با Python 3.11 کار می‌کنه 😊")
+def start(update, context):
+    update.message.reply_text("ربات فعاله ✔")
 
-app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(CommandHandler("start", start))
+def main():
+    updater = Updater(TOKEN, use_context=True)
+    dp = updater.dispatcher
 
-app.run_polling()
+    dp.add_handler(CommandHandler("start", start))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
+    main()
